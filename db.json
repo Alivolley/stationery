@@ -1,0 +1,20 @@
+{
+   "categories": [
+      {
+         "id": 1,
+         "category": "خودکار"
+      },
+      {
+         "id": 2,
+         "category": "دفتر"
+      },
+      {
+         "id": 3,
+         "category": "پاک کن"
+      },
+      {
+         "id": 4,
+         "category": "مداد"
+      }
+   ]
+}
