@@ -58,6 +58,7 @@ const CategoriesBox = styled.div`
    gap: 2rem;
    direction: rtl;
    min-width: 10rem;
+   z-index: 10;
 `;
 
 const CatItem = styled.a`

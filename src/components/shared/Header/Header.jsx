@@ -20,7 +20,7 @@ const Header = () => {
                </LoginBtn>
             </HeaderRightSide>
          </HeaderWrapper>
-         <hr />
+         <hr style={{ marginTop: 30 }} />
       </Wrapper>
    );
 };
@@ -29,6 +29,7 @@ export default Header;
 
 const Wrapper = styled.div`
    margin: 0 12rem;
+   margin-top: 3rem;
 `;
 
 const HeaderWrapper = styled.header`
