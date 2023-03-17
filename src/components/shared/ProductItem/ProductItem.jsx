@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const ProductItem = () => {
@@ -12,7 +13,7 @@ const ProductItem = () => {
                وضعیت موجودی :<Exist>موجود</Exist>
                {/* <NotExist>نا موجود</NotExist> */}
             </Avalible>
-            <DetailBtn>جزئیات بیشتر</DetailBtn>
+            <DetailBtn to="product/3">جزئیات بیشتر</DetailBtn>
          </Describtion>
       </Wrapper>
    );
@@ -62,8 +63,10 @@ const Avalible = styled.div`
    gap: 0.5rem;
 `;
 
-const DetailBtn = styled.button`
+const DetailBtn = styled(Link)`
    margin: 0;
+   text-align: center;
+   text-decoration: none;
    font-size: 1.4rem;
    background-color: var(--purple-color);
    color: white;
