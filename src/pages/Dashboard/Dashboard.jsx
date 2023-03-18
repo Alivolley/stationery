@@ -6,11 +6,14 @@ import useAllProducts from "../../api/allProducts/useAllProducts";
 import Spinner from "react-bootstrap/Spinner";
 import DeleteModal from "../../components/shared/Modals/DeleteModal/DeleteModal";
 import TableItem from "../../components/shared/TableItem/TableItem";
+import EditModal from "../../components/shared/Modals/EditModal/EditModal";
 
 const Dashboard = () => {
    const [showAddModal, setShowAddModal] = useState(false);
    const [showDeleteModal, setShowDeleteModal] = useState(false);
+   const [showEditModal, setShowEditModal] = useState(false);
    const [chosenDeleteDetail, setChosenDeleteDetail] = useState({});
+   const [chosenEditDetail, setChosenEditDetail] = useState({});
 
    const [getProductsList, productsList, loading] = useAllProducts();
 
@@ -22,6 +25,11 @@ const Dashboard = () => {
    const deleteHandle = (product) => {
       setShowDeleteModal(true);
       setChosenDeleteDetail(product);
+   };
+
+   const editHandle = (product) => {
+      setShowEditModal(true);
+      setChosenEditDetail(product);
    };
 
    return (
@@ -46,7 +54,7 @@ const Dashboard = () => {
                </thead>
                <tbody>
                   {productsList.map((product) => (
-                     <TableItem product={product} deleteHandle={deleteHandle} key={product.id} />
+                     <TableItem product={product} deleteHandle={deleteHandle} key={product.id} editHandle={editHandle} />
                   ))}
                </tbody>
             </Table>
@@ -54,6 +62,7 @@ const Dashboard = () => {
 
          <AddModal show={showAddModal} onHide={() => setShowAddModal(false)} getProductsList={getProductsList} />
          <DeleteModal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} getProductsList={getProductsList} chosenDeleteDetail={chosenDeleteDetail} />
+         <EditModal show={showEditModal} onHide={() => setShowEditModal(false)} getProductsList={getProductsList} chosenEditDetail={chosenEditDetail} />
       </Wrapper>
    );
 };

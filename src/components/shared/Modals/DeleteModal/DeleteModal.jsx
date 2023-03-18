@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import useDeleteProduct from "../../../../api/deleteProduct/useDeleteProduct";
+import LoadingBtn from "../../LoadingBtn/LoadingBtn";
 
 const DeleteModal = ({ show, onHide, getProductsList, chosenDeleteDetail }) => {
    const [deleteRequest, loading] = useDeleteProduct();
@@ -16,7 +17,7 @@ const DeleteModal = ({ show, onHide, getProductsList, chosenDeleteDetail }) => {
             <Title>آیا از حذف {chosenDeleteDetail.name} مطمئن اید ؟</Title>
             <BtnGroup>
                <CancelBtn onClick={onHide}>انصراف</CancelBtn>
-               <AddBtn onClick={deleteProduct}>تایید</AddBtn>
+               {loading ? <LoadingBtn /> : <AddBtn onClick={deleteProduct}>تایید</AddBtn>}
             </BtnGroup>
          </Wrapper>
       </Modal>

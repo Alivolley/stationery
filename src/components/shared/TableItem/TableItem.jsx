@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import loadingImage from "./../../../assets/Images/loading.png";
 
-const TableItem = ({ product, deleteHandle }) => {
+const TableItem = ({ product, deleteHandle, editHandle }) => {
    const [picSrc, setPicSrc] = useState();
 
    useEffect(() => {
@@ -23,7 +23,7 @@ const TableItem = ({ product, deleteHandle }) => {
          <td>
             <Options>
                <DeleteBtn onClick={() => deleteHandle(product)}>حذف</DeleteBtn>
-               <EditBtn>ویرایش</EditBtn>
+               <EditBtn onClick={() => editHandle(product)}>ویرایش</EditBtn>
             </Options>
          </td>
       </tr>
