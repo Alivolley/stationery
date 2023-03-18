@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ReloadContext from "../../context/ReloadContext";
+import Cookies from "js-cookie";
 
 const useLogin = () => {
    const navigate = useNavigate();
 
    const [loading, setLoading] = useState(false);
+   const appReload = useContext(ReloadContext);
 
    const getUsersList = (email, password) => {
       setLoading(true);
@@ -15,6 +18,11 @@ const useLogin = () => {
          .get(`users?email=${email}&password=${password}`)
          .then((res) => {
             if (res.data.length) {
+               Cookies.set("username", res.data[0].username);
+               Cookies.set("role", res.data[0].role);
+               Cookies.set("login", true);
+               appReload();
+
                toast.success("با موفقیت وارد شدید .", {
                   theme: "colored",
                   rtl: true,

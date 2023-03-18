@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import ReloadContext from "../../context/ReloadContext";
 
 const useRgister = () => {
-   const navigate = useNavigate();
-
+   const appReload = useContext(ReloadContext);
    const [loading, setLoading] = useState(false);
+
+   const navigate = useNavigate();
 
    const getUsersList = (username, email, password, confirmPassword) => {
       setLoading(true);
@@ -14,7 +17,6 @@ const useRgister = () => {
       axiosInstance
          .get(`users?email=${email}`)
          .then((res) => {
-            console.log(res.data);
             if (res.data.length) {
                toast.error("کاربری با این ایمیل وجود دارد.", {
                   theme: "colored",
@@ -32,6 +34,11 @@ const useRgister = () => {
                   .post("users", newUser)
                   .then((res) => {
                      if (res.statusText === "Created") {
+                        Cookies.set("username", res.data.username);
+                        Cookies.set("role", res.data.role);
+                        Cookies.set("login", true);
+                        appReload();
+
                         toast.success("حساب با موفقیت ساخته شد .", {
                            theme: "colored",
                            rtl: true,
