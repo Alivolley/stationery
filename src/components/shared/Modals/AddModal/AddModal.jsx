@@ -25,10 +25,8 @@ const AddModal = ({ show, onHide, getProductsList }) => {
       e.preventDefault();
 
       if (name && price && category && explain && imageSrc) {
-         const objectUrl = URL.createObjectURL(imageSrc);
-
          const newProduct = {
-            file: objectUrl,
+            file: imageSrc.name,
             name,
             price,
             category,

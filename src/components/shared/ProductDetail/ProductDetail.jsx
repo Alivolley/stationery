@@ -1,29 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import useProductDetail from "../../../api/productDetail/useProductDetail";
+import Spinner from "react-bootstrap/Spinner";
+import loadingImage from "./../../../assets/Images/loading.png";
 
 const ProductDetail = () => {
+   const [picSrc, setPicSrc] = useState();
    const { id } = useParams();
+
+   const [getProductsDetail, mainProducts, loading] = useProductDetail(id);
+
+   useEffect(() => {
+      getProductsDetail();
+   }, []);
+
+   useEffect(() => {
+      mainProducts.file && import(`./../../../assets/Images/${mainProducts.file}`).then((res) => setPicSrc(res.default));
+   }, [mainProducts.file]);
 
    return (
       <Wrapper>
-         <Image src="https://images.unsplash.com/photo-1585336261022-680e295ce3fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVufGVufDB8fDB8fA%3D%3D&w=1000&q=80" />
-         <Describtion>
-            <Title>خودکار آبی</Title>
-            <Price>{(524000).toLocaleString("fa-IR")} تومان</Price>
-            <Avalible>
-               وضعیت موجودی :<Exist>موجود</Exist>
-               {/* <NotExist>نا موجود</NotExist> */}
-            </Avalible>
-            <Detail>
-               لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
-               لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده،
-               شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد
-               کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی،
-               و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-            </Detail>
-         </Describtion>
-         <AddBtn>اضافه کردن به سبد خرید</AddBtn>
+         {loading ? (
+            <Spinner animation="border" variant="dark" />
+         ) : (
+            <>
+               <Image src={picSrc || loadingImage} />
+               <Describtion>
+                  <Title>{mainProducts.name}</Title>
+                  <Price>{Number(mainProducts.price).toLocaleString("fa-IR")} تومان</Price>
+                  <Avalible>وضعیت موجودی :{mainProducts.isAvalible ? <Exist>موجود</Exist> : <NotExist>نا موجود</NotExist>}</Avalible>
+                  <Detail>{mainProducts.describtion}</Detail>
+               </Describtion>
+               <AddBtn>اضافه کردن به سبد خرید</AddBtn>
+            </>
+         )}
       </Wrapper>
    );
 };
@@ -39,6 +50,8 @@ const Image = styled.img`
    height: 20rem;
    display: block;
    margin: 0 auto;
+   border: 0.1rem solid gray;
+   border-radius: 0.5rem;
 `;
 
 const Describtion = styled.div`

@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import loadingImage from "./../../../assets/Images/loading.png";
 
 const ProductItem = ({ category, describtion, imageSrc, isAvalible, name, price, productId }) => {
+   const [picSrc, setPicSrc] = useState();
+
+   useEffect(() => {
+      import(`./../../../assets/Images/${imageSrc}`).then((res) => setPicSrc(res.default));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
+
    return (
       <Wrapper>
-         <Image src={imageSrc} />
+         <Image src={picSrc || loadingImage} />
          <Describtion>
             <Title>{name}</Title>
             <Price>{Number(price).toLocaleString("fa-IR")} تومان</Price>
@@ -40,6 +48,7 @@ const Image = styled.img`
 const Describtion = styled.div`
    display: flex;
    flex-direction: column;
+   align-items: flex-start;
    gap: 1rem;
    width: 100%;
 `;

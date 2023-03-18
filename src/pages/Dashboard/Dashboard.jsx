@@ -5,6 +5,7 @@ import AddModal from "../../components/shared/Modals/AddModal/AddModal";
 import useAllProducts from "../../api/allProducts/useAllProducts";
 import Spinner from "react-bootstrap/Spinner";
 import DeleteModal from "../../components/shared/Modals/DeleteModal/DeleteModal";
+import TableItem from "../../components/shared/TableItem/TableItem";
 
 const Dashboard = () => {
    const [showAddModal, setShowAddModal] = useState(false);
@@ -45,22 +46,7 @@ const Dashboard = () => {
                </thead>
                <tbody>
                   {productsList.map((product) => (
-                     <tr key={product.id}>
-                        <td>{product.id}</td>
-                        <td>
-                           <Image src={product.file} />
-                        </td>
-                        <td>{product.name}</td>
-                        <td>{product.category}</td>
-                        <td>{Number(product.price).toLocaleString("fa-IR")}</td>
-
-                        <td>
-                           <Options>
-                              <DeleteBtn onClick={() => deleteHandle(product)}>حذف</DeleteBtn>
-                              <EditBtn>ویرایش</EditBtn>
-                           </Options>
-                        </td>
-                     </tr>
+                     <TableItem product={product} deleteHandle={deleteHandle} key={product.id} />
                   ))}
                </tbody>
             </Table>
@@ -102,36 +88,3 @@ const AddProductBtn = styled.button`
 `;
 
 const AddCategoryBtn = styled(AddProductBtn)``;
-
-const Image = styled.img`
-   width: 5rem;
-   height: 5rem;
-`;
-
-const Options = styled.div`
-   display: flex;
-   justify-content: center;
-   gap: 1rem;
-`;
-
-const DeleteBtn = styled.button`
-   font-size: 1.4rem;
-   background-color: var(--red-color);
-   color: white;
-   border: 0.2rem solid var(--red-color);
-   border-radius: 0.5rem;
-   padding: 0.2rem 1.2rem;
-   cursor: pointer;
-   transition: all 0.2s;
-
-   &:hover {
-      background-color: white;
-      color: black;
-   }
-`;
-
-const EditBtn = styled(DeleteBtn)`
-   background-color: #ddad0f;
-   border-color: #ddad0f;
-   color: black;
-`;
