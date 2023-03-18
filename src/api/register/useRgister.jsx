@@ -34,14 +34,15 @@ const useRgister = () => {
                   .post("users", newUser)
                   .then((res) => {
                      if (res.statusText === "Created") {
-                        Cookies.set("username", res.data.username);
-                        Cookies.set("role", res.data.role);
-                        Cookies.set("login", true);
+                        Cookies.set("username", res.data.username, { expires: 1 });
+                        Cookies.set("role", res.data.role, { expires: 1 });
+                        Cookies.set("login", true, { expires: 1 });
                         appReload();
 
                         toast.success("حساب با موفقیت ساخته شد .", {
                            theme: "colored",
                            rtl: true,
+                           position: toast.POSITION.BOTTOM_RIGHT,
                         });
 
                         navigate("/");

@@ -18,14 +18,15 @@ const useLogin = () => {
          .get(`users?email=${email}&password=${password}`)
          .then((res) => {
             if (res.data.length) {
-               Cookies.set("username", res.data[0].username);
-               Cookies.set("role", res.data[0].role);
-               Cookies.set("login", true);
+               Cookies.set("username", res.data[0].username, { expires: 1 });
+               Cookies.set("role", res.data[0].role, { expires: 1 });
+               Cookies.set("login", true, { expires: 1 });
                appReload();
 
                toast.success("با موفقیت وارد شدید .", {
                   theme: "colored",
                   rtl: true,
+                  position: toast.POSITION.BOTTOM_RIGHT,
                });
 
                navigate("/");

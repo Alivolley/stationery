@@ -29,6 +29,7 @@ const Input = styled.input`
    outline: none;
    padding: 0 2rem;
    direction: rtl;
+   font-size: 1.4rem;
 `;
 
 const IconHolder = styled.button`
