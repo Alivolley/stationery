@@ -1,26 +1,34 @@
+import Dashboard from "../../pages/Dashboard/Dashboard";
 import Home from "../../pages/Home/Home";
 import Login from "../../pages/Login/Login";
 import Register from "../../pages/Register/Register";
+import PrivateRoute from "../private/PrivateRoute";
 import ProductDetail from "../shared/ProductDetail/ProductDetail";
 
 const routes = [
    {
-      id: 1,
       path: "/",
       element: <Home />,
    },
    {
-      id: 2,
       path: "/register",
       element: <Register />,
    },
    {
-      id: 3,
       path: "/login",
       element: <Login />,
    },
    {
-      id: 4,
+      path: "/*",
+      element: <PrivateRoute />,
+      children: [
+         {
+            path: "dashboard",
+            element: <Dashboard />,
+         },
+      ],
+   },
+   {
       path: "/product/:id",
       element: <ProductDetail />,
    },
