@@ -3,18 +3,19 @@ import styled from "styled-components";
 import SearchBar from "./SearchBar/SearchBar";
 import { AiOutlineUser } from "react-icons/ai";
 import Categories from "./Categories/Categories";
+import { Link } from "react-router-dom";
 
 const Header = () => {
    return (
       <Wrapper>
          <HeaderWrapper>
             <HeaderLeftSide>
-               <Logo>Stationery</Logo>
+               <Logo to="/">Stationery</Logo>
                <SearchBar />
             </HeaderLeftSide>
             <HeaderRightSide>
                <Categories />
-               <LoginBtn>
+               <LoginBtn to="/login">
                   <AiOutlineUser />
                   ورود / ثبت نام
                </LoginBtn>
@@ -50,12 +51,16 @@ const HeaderRightSide = styled.div`
    gap: 5rem;
 `;
 
-const Logo = styled.h2`
+const Logo = styled(Link)`
    font-family: cursive !important;
    letter-spacing: 0.6rem;
+   font-size: 2.2rem;
+   text-decoration: none;
+   color: black;
 `;
 
-const LoginBtn = styled.button`
+const LoginBtn = styled(Link)`
+   text-decoration: none;
    display: flex;
    align-items: center;
    gap: 0.7rem;

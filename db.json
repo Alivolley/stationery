@@ -16,5 +16,21 @@
          "id": 4,
          "category": "مداد"
       }
+   ],
+   "users": [
+      {
+         "id": 1,
+         "username": "ali",
+         "email": "ali@gmail.com",
+         "password": "1234",
+         "role": "admin"
+      },
+      {
+         "username": "naser",
+         "email": "naser@gmail.com",
+         "password": "14253614",
+         "role": "user",
+         "id": 2
+      }
    ]
 }
