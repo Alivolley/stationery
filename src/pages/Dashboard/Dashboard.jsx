@@ -4,9 +4,12 @@ import Table from "react-bootstrap/Table";
 import AddModal from "../../components/shared/Modals/AddModal/AddModal";
 import useAllProducts from "../../api/allProducts/useAllProducts";
 import Spinner from "react-bootstrap/Spinner";
+import DeleteModal from "../../components/shared/Modals/DeleteModal/DeleteModal";
 
 const Dashboard = () => {
    const [showAddModal, setShowAddModal] = useState(false);
+   const [showDeleteModal, setShowDeleteModal] = useState(false);
+   const [chosenDeleteDetail, setChosenDeleteDetail] = useState({});
 
    const [getProductsList, productsList, loading] = useAllProducts();
 
@@ -15,7 +18,10 @@ const Dashboard = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-   console.log(productsList);
+   const deleteHandle = (product) => {
+      setShowDeleteModal(true);
+      setChosenDeleteDetail(product);
+   };
 
    return (
       <Wrapper>
@@ -50,7 +56,7 @@ const Dashboard = () => {
 
                         <td>
                            <Options>
-                              <DeleteBtn>حذف</DeleteBtn>
+                              <DeleteBtn onClick={() => deleteHandle(product)}>حذف</DeleteBtn>
                               <EditBtn>ویرایش</EditBtn>
                            </Options>
                         </td>
@@ -61,6 +67,7 @@ const Dashboard = () => {
          )}
 
          <AddModal show={showAddModal} onHide={() => setShowAddModal(false)} getProductsList={getProductsList} />
+         <DeleteModal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} getProductsList={getProductsList} chosenDeleteDetail={chosenDeleteDetail} />
       </Wrapper>
    );
 };
