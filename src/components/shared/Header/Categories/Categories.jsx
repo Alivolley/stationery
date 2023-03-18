@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import useCategories from "../../../../api/categories/useCategories";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
    const [showCat, setShowCat] = useState(false);
+   const [getCategoryList, categoryList] = useCategories();
+
+   useEffect(() => {
+      getCategoryList();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    return (
       <CategoriesWrapper>
@@ -13,10 +21,11 @@ const Categories = () => {
          </ToggleButton>
          {showCat && (
             <CategoriesBox>
-               <CatItem href="#">خودکار</CatItem>
-               <CatItem href="#">دفتر</CatItem>
-               <CatItem href="#">پاک کن</CatItem>
-               <CatItem href="#">مداد</CatItem>
+               {categoryList.map((item) => (
+                  <CatItem key={item.id} to={`/category/${item.id}`}>
+                     {item.category}
+                  </CatItem>
+               ))}
             </CategoriesBox>
          )}
       </CategoriesWrapper>
@@ -57,11 +66,11 @@ const CategoriesBox = styled.div`
    padding: 1.5rem;
    gap: 2rem;
    direction: rtl;
-   min-width: 10rem;
+   width: max-content;
    z-index: 10;
 `;
 
-const CatItem = styled.a`
+const CatItem = styled(Link)`
    text-decoration: none;
    color: black;
 `;

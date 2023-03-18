@@ -32,6 +32,10 @@ const routes = [
       path: "/product/:id",
       element: <ProductDetail />,
    },
+   // {
+   //    path: "/category/:id",
+   //    element: <ProductDetail />,
+   // },
 ];
 
 export default routes;

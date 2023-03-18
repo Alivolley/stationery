@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import AddModal from "../../components/shared/Modals/AddModal/AddModal";
+import useAllProducts from "../../api/allProducts/useAllProducts";
+import Spinner from "react-bootstrap/Spinner";
 
 const Dashboard = () => {
    const [showAddModal, setShowAddModal] = useState(false);
+
+   const [getProductsList, productsList, loading] = useAllProducts();
+
+   useEffect(() => {
+      getProductsList();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
+
+   console.log(productsList);
 
    return (
       <Wrapper>
@@ -12,36 +23,44 @@ const Dashboard = () => {
             <AddProductBtn onClick={() => setShowAddModal(true)}>اضافه کردن محصول جدید</AddProductBtn>
             <AddCategoryBtn>اضافه کردن دسته بندی جدید</AddCategoryBtn>
          </AddBtnGroup>
-         <Table striped bordered>
-            <thead>
-               <tr>
-                  <th>id</th>
-                  <th>عکس</th>
-                  <th>نام</th>
-                  <th>قیمت</th>
-                  <th>گزینه ها</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>1</td>
-                  <td>
-                     <Image />
-                  </td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+         {loading ? (
+            <Spinner animation="border" variant="dark" />
+         ) : (
+            <Table striped bordered>
+               <thead>
+                  <tr>
+                     <th>id</th>
+                     <th>عکس</th>
+                     <th>نام</th>
+                     <th>دسته بندی</th>
+                     <th>قیمت</th>
+                     <th>گزینه ها</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {productsList.map((product) => (
+                     <tr key={product.id}>
+                        <td>{product.id}</td>
+                        <td>
+                           <Image src={product.file} />
+                        </td>
+                        <td>{product.name}</td>
+                        <td>{product.category}</td>
+                        <td>{Number(product.price).toLocaleString("fa-IR")}</td>
 
-                  <td>
-                     <Options>
-                        <DeleteBtn>حذف</DeleteBtn>
-                        <EditBtn>ویرایش</EditBtn>
-                     </Options>
-                  </td>
-               </tr>
-            </tbody>
-         </Table>
+                        <td>
+                           <Options>
+                              <DeleteBtn>حذف</DeleteBtn>
+                              <EditBtn>ویرایش</EditBtn>
+                           </Options>
+                        </td>
+                     </tr>
+                  ))}
+               </tbody>
+            </Table>
+         )}
 
-         <AddModal show={showAddModal} onHide={() => setShowAddModal(false)}></AddModal>
+         <AddModal show={showAddModal} onHide={() => setShowAddModal(false)} getProductsList={getProductsList} />
       </Wrapper>
    );
 };
@@ -77,10 +96,14 @@ const AddProductBtn = styled.button`
 
 const AddCategoryBtn = styled(AddProductBtn)``;
 
-const Image = styled.img``;
+const Image = styled.img`
+   width: 5rem;
+   height: 5rem;
+`;
 
 const Options = styled.div`
    display: flex;
+   justify-content: center;
    gap: 1rem;
 `;
 

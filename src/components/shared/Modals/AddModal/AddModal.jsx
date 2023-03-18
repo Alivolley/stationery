@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import useAddProduct from "../../../../api/addProduct/useAddProduct";
 import LoadingBtn from "../../LoadingBtn/LoadingBtn";
+import useCategories from "../../../../api/categories/useCategories";
 
-const AddModal = ({ show, onHide }) => {
+const AddModal = ({ show, onHide, getProductsList }) => {
    const [name, setName] = useState("");
    const [price, setPrice] = useState("");
    const [category, setCategory] = useState("");
@@ -13,6 +14,12 @@ const AddModal = ({ show, onHide }) => {
    const [imageSrc, setImageSrc] = useState("");
 
    const [addRequest, loading] = useAddProduct();
+   const [getCategoryList, categoryList] = useCategories();
+
+   useEffect(() => {
+      getCategoryList();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    const createProduct = (e) => {
       e.preventDefault();
@@ -29,7 +36,7 @@ const AddModal = ({ show, onHide }) => {
             describtion: explain,
          };
 
-         addRequest(newProduct, emptyInputs);
+         addRequest(newProduct, emptyInputs, getProductsList);
       } else {
          toast.error("لطفا تمام آیتم ها را پر کنید.", {
             theme: "colored",
@@ -48,7 +55,7 @@ const AddModal = ({ show, onHide }) => {
    };
 
    return (
-      <Modal show={show} onHide={onHide} centered>
+      <Modal show={show} onHide={emptyInputs} centered>
          <Title>اضافه کردن محصول جدید</Title>
          <hr />
          <Box onSubmit={createProduct}>
@@ -66,10 +73,11 @@ const AddModal = ({ show, onHide }) => {
                   <Option value={null} disabled={category ? true : false}>
                      یک گزینه انتخاب کنید
                   </Option>
-                  <Option value="some0">some0</Option>
-                  <Option value="some1">some1</Option>
-                  <Option value="some2">some2</Option>
-                  <Option value="some3">some3</Option>
+                  {categoryList.map((item) => (
+                     <Option key={item.id} value={item.category}>
+                        {item.category}
+                     </Option>
+                  ))}
                </Select>
             </Item>
             <Item>
@@ -82,7 +90,7 @@ const AddModal = ({ show, onHide }) => {
             </Item>
 
             <BtnGroup>
-               <CancelBtn type="button" onClick={onHide}>
+               <CancelBtn type="button" onClick={emptyInputs}>
                   انصراف
                </CancelBtn>
                {loading ? <LoadingBtn /> : <AddBtn type="submit">اضافه کردن</AddBtn>}

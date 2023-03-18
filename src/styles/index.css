@@ -21,3 +21,10 @@ body {
 * {
    font-family: "vazir" !important;
 }
+
+th,
+td,
+tr {
+   text-align: center;
+   padding: 1rem 0 !important;
+}

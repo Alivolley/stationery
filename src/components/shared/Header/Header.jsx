@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import SearchBar from "./SearchBar/SearchBar";
 import { AiOutlineUser } from "react-icons/ai";
 import { SlBasket } from "react-icons/sl";
 import Categories from "./Categories/Categories";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import ReloadContext from "../../../context/ReloadContext";
 
 const Header = () => {
-   const appReload = useContext(ReloadContext);
+   const navigate = useNavigate();
    const isLogedIn = Cookies.get("login");
    const isAdmin = Cookies.get("role");
 
@@ -17,7 +16,7 @@ const Header = () => {
       Cookies.remove("username");
       Cookies.remove("role");
       Cookies.remove("login");
-      appReload();
+      navigate(0);
    };
 
    return (

@@ -2,18 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const ProductItem = () => {
+const ProductItem = ({ category, describtion, imageSrc, isAvalible, name, price, productId }) => {
    return (
       <Wrapper>
-         <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png" />
+         <Image src={imageSrc} />
          <Describtion>
-            <Title>خودکار آبی</Title>
-            <Price>{(127000).toLocaleString("fa-IR")} تومان</Price>
-            <Avalible>
-               وضعیت موجودی :<Exist>موجود</Exist>
-               {/* <NotExist>نا موجود</NotExist> */}
-            </Avalible>
-            <DetailBtn to="product/3">جزئیات بیشتر</DetailBtn>
+            <Title>{name}</Title>
+            <Price>{Number(price).toLocaleString("fa-IR")} تومان</Price>
+            <Avalible>وضعیت موجودی :{isAvalible ? <Exist>موجود</Exist> : <NotExist>نا موجود</NotExist>}</Avalible>
+            <Category>دسته بندی : {category}</Category>
+            <DetailBtn to={`/product/${productId}`}>جزئیات بیشتر</DetailBtn>
          </Describtion>
       </Wrapper>
    );
@@ -62,6 +60,8 @@ const Avalible = styled.div`
    display: flex;
    gap: 0.5rem;
 `;
+
+const Category = styled(Avalible)``;
 
 const DetailBtn = styled(Link)`
    margin: 0;

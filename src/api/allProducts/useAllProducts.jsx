@@ -2,25 +2,17 @@ import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 import { toast } from "react-toastify";
 
-const useAddProduct = () => {
+const useAllProducts = () => {
    const [loading, setLoading] = useState(false);
+   const [productsList, setProductsList] = useState([]);
 
-   const addRequest = (newProduct, emptyInputs, getProductsList) => {
+   const getProductsList = () => {
       setLoading(true);
 
       axiosInstance
-         .post(`products`, newProduct)
+         .get(`products`)
          .then((res) => {
-            if (res.statusText === "Created") {
-               toast.success("محصول جدید اضافه شد .", {
-                  theme: "colored",
-                  rtl: true,
-                  position: toast.POSITION.BOTTOM_RIGHT,
-               });
-
-               emptyInputs();
-               getProductsList();
-            }
+            setProductsList(res.data);
          })
          .catch((err) => {
             console.log(err);
@@ -32,7 +24,7 @@ const useAddProduct = () => {
          .finally(() => setLoading(false));
    };
 
-   return [addRequest, loading];
+   return [getProductsList, productsList, loading];
 };
 
-export default useAddProduct;
+export default useAllProducts;

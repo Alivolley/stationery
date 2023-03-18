@@ -39,7 +39,7 @@ const useLogin = () => {
          })
          .catch((err) => {
             console.log(err);
-            toast.error("ایراد شبکه !!!       احتمالا بک اند خود را run نکرده اید !", {
+            toast.error("ایراد شبکه !!!احتمالا بک اند خود را run نکرده اید !", {
                theme: "colored",
                rtl: true,
             });
