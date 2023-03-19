@@ -4,6 +4,7 @@ import Dashboard from "../../pages/Dashboard/Dashboard";
 import Home from "../../pages/Home/Home";
 import Login from "../../pages/Login/Login";
 import Register from "../../pages/Register/Register";
+import Search from "../../pages/Search/Search";
 import PrivateRoute from "../private/PrivateRoute";
 import ProductDetail from "../shared/ProductDetail/ProductDetail";
 
@@ -41,6 +42,10 @@ const routes = [
    {
       path: "/category/:id",
       element: <CategoryDetail />,
+   },
+   {
+      path: "/search/:word",
+      element: <Search />,
    },
 ];
 
