@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import ReloadContext from "../../context/ReloadContext";
 
 const useRgister = () => {
-   const appReload = useContext(ReloadContext);
+   const { appReload } = useContext(ReloadContext);
    const [loading, setLoading] = useState(false);
 
    const navigate = useNavigate();

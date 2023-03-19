@@ -4,20 +4,39 @@ import styled from "styled-components";
 import useProductDetail from "../../../api/productDetail/useProductDetail";
 import Spinner from "react-bootstrap/Spinner";
 import loadingImage from "./../../../assets/Images/loading.png";
+import { Alert } from "react-bootstrap";
+import useAddToBasket from "../../../api/addToBasket/useAddToBasket";
 
 const ProductDetail = () => {
    const [picSrc, setPicSrc] = useState();
    const { id } = useParams();
 
    const [getProductsDetail, mainProducts, loading] = useProductDetail(id);
+   const [addRequest, basketLoading] = useAddToBasket();
 
    useEffect(() => {
       getProductsDetail();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    useEffect(() => {
       mainProducts.file && import(`./../../../assets/Images/${mainProducts.file}`).then((res) => setPicSrc(res.default));
    }, [mainProducts.file]);
+
+   const addToBasketHandler = () => {
+      const newBasketProduct = {
+         file: mainProducts.file,
+         name: mainProducts.name,
+         price: mainProducts.price,
+         category: mainProducts.category,
+         isAvalible: mainProducts.isAvalible,
+         describtion: mainProducts.describtion,
+         isInBasket: true,
+         id: mainProducts.id,
+      };
+
+      addRequest(newBasketProduct, getProductsDetail, mainProducts);
+   };
 
    return (
       <Wrapper>
@@ -32,7 +51,17 @@ const ProductDetail = () => {
                   <Avalible>وضعیت موجودی :{mainProducts.isAvalible ? <Exist>موجود</Exist> : <NotExist>نا موجود</NotExist>}</Avalible>
                   <Detail>{mainProducts.describtion}</Detail>
                </Describtion>
-               <AddBtn>اضافه کردن به سبد خرید</AddBtn>
+               {mainProducts.isAvalible ? (
+                  <>
+                     {mainProducts.isInBasket ? (
+                        <ExistInBasket>محصول در سبد شما موجود است.</ExistInBasket>
+                     ) : (
+                        <AddBtn onClick={addToBasketHandler}>اضافه کردن به سبد خرید</AddBtn>
+                     )}
+                  </>
+               ) : (
+                  <NotAvalible variant="danger">محصول موجود نیست</NotAvalible>
+               )}
             </>
          )}
       </Wrapper>
@@ -105,4 +134,16 @@ const AddBtn = styled.button`
       background-color: white;
       color: black;
    }
+`;
+
+const ExistInBasket = styled(Alert)`
+   width: fit-content !important;
+   direction: rtl;
+   margin-top: 2rem;
+`;
+
+const NotAvalible = styled(Alert)`
+   width: fit-content !important;
+   direction: rtl;
+   margin-top: 2rem;
 `;

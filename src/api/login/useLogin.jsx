@@ -9,7 +9,7 @@ const useLogin = () => {
    const navigate = useNavigate();
 
    const [loading, setLoading] = useState(false);
-   const appReload = useContext(ReloadContext);
+   const { appReload } = useContext(ReloadContext);
 
    const getUsersList = (email, password) => {
       setLoading(true);

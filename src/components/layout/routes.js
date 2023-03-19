@@ -1,3 +1,4 @@
+import Basket from "../../pages/Basket/Basket";
 import CategoryDetail from "../../pages/CategoryDetail/CategoryDetail";
 import Dashboard from "../../pages/Dashboard/Dashboard";
 import Home from "../../pages/Home/Home";
@@ -26,6 +27,10 @@ const routes = [
          {
             path: "dashboard",
             element: <Dashboard />,
+         },
+         {
+            path: "basket",
+            element: <Basket />,
          },
       ],
    },

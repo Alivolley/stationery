@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import SearchBar from "./SearchBar/SearchBar";
 import { AiOutlineUser } from "react-icons/ai";
@@ -6,11 +6,19 @@ import { SlBasket } from "react-icons/sl";
 import Categories from "./Categories/Categories";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import ReloadContext from "../../../context/ReloadContext";
 
-const Header = () => {
+const Header = ({ basketCount }) => {
    const navigate = useNavigate();
    const isLogedIn = Cookies.get("login");
    const isAdmin = Cookies.get("role");
+
+   const { basketReload } = useContext(ReloadContext);
+
+   useEffect(() => {
+      basketReload();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    const logOut = () => {
       Cookies.remove("username");
@@ -27,6 +35,7 @@ const Header = () => {
                {isLogedIn && (
                   <BasketBtn to="/basket">
                      <SlBasket />
+                     <BadgeNumber>{basketCount}</BadgeNumber>
                   </BasketBtn>
                )}
                <SearchBar />
@@ -123,4 +132,19 @@ const LogoutBtn = styled.button`
 
 const DashboardBtn = styled(LoginBtn)``;
 
-const BasketBtn = styled(LoginBtn)``;
+const BasketBtn = styled(LoginBtn)`
+   position: relative;
+`;
+
+const BadgeNumber = styled.span`
+   position: absolute;
+   top: 70%;
+   left: 70%;
+   background-color: white;
+   color: black;
+   border-radius: 50%;
+   border: 0.1rem solid black;
+   font-size: 1.2rem;
+   font-weight: 700;
+   padding: 0.05rem 0.6rem;
+`;

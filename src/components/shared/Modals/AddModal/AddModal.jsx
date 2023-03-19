@@ -32,6 +32,7 @@ const AddModal = ({ show, onHide, getProductsList }) => {
             category,
             isAvalible: true,
             describtion: explain,
+            isInBasket: false,
          };
 
          addRequest(newProduct, emptyInputs, getProductsList);
