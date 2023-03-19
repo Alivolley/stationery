@@ -22,7 +22,7 @@ const Categories = () => {
          {showCat && (
             <CategoriesBox>
                {categoryList.map((item) => (
-                  <CatItem key={item.id} to={`/category/${item.id}`}>
+                  <CatItem key={item.id} to={`/category/${item.id}`} onClick={() => setShowCat(false)}>
                      {item.category}
                   </CatItem>
                ))}

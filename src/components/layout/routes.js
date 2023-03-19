@@ -1,3 +1,4 @@
+import CategoryDetail from "../../pages/CategoryDetail/CategoryDetail";
 import Dashboard from "../../pages/Dashboard/Dashboard";
 import Home from "../../pages/Home/Home";
 import Login from "../../pages/Login/Login";
@@ -32,10 +33,10 @@ const routes = [
       path: "/product/:id",
       element: <ProductDetail />,
    },
-   // {
-   //    path: "/category/:id",
-   //    element: <ProductDetail />,
-   // },
+   {
+      path: "/category/:id",
+      element: <CategoryDetail />,
+   },
 ];
 
 export default routes;
