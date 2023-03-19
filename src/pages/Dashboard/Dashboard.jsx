@@ -7,11 +7,13 @@ import Spinner from "react-bootstrap/Spinner";
 import DeleteModal from "../../components/shared/Modals/DeleteModal/DeleteModal";
 import TableItem from "../../components/shared/TableItem/TableItem";
 import EditModal from "../../components/shared/Modals/EditModal/EditModal";
+import AddCategoryModal from "../../components/shared/Modals/AddCategoryModal/AddCategoryModal";
 
 const Dashboard = () => {
    const [showAddModal, setShowAddModal] = useState(false);
    const [showDeleteModal, setShowDeleteModal] = useState(false);
    const [showEditModal, setShowEditModal] = useState(false);
+   const [showCategoryModal, setShowCategoryModal] = useState(false);
    const [chosenDeleteDetail, setChosenDeleteDetail] = useState({});
    const [chosenEditDetail, setChosenEditDetail] = useState({});
 
@@ -36,7 +38,7 @@ const Dashboard = () => {
       <Wrapper>
          <AddBtnGroup>
             <AddProductBtn onClick={() => setShowAddModal(true)}>اضافه کردن محصول جدید</AddProductBtn>
-            <AddCategoryBtn>اضافه کردن دسته بندی جدید</AddCategoryBtn>
+            <AddCategoryBtn onClick={() => setShowCategoryModal(true)}>اضافه کردن دسته بندی جدید</AddCategoryBtn>
          </AddBtnGroup>
          {loading ? (
             <Spinner animation="border" variant="dark" />
@@ -63,6 +65,7 @@ const Dashboard = () => {
          <AddModal show={showAddModal} onHide={() => setShowAddModal(false)} getProductsList={getProductsList} />
          <DeleteModal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} getProductsList={getProductsList} chosenDeleteDetail={chosenDeleteDetail} />
          <EditModal show={showEditModal} onHide={() => setShowEditModal(false)} getProductsList={getProductsList} chosenEditDetail={chosenEditDetail} />
+         <AddCategoryModal show={showCategoryModal} onHide={() => setShowCategoryModal(false)} />
       </Wrapper>
    );
 };
